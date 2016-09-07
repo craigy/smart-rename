@@ -1,6 +1,6 @@
 (set-env!
  :source-paths #{"src/clj" "test/clj"}
- :resource-paths #{}
+ :resource-paths #{"resources"}
 
  :dependencies
  '[[org.clojure/clojure                 "1.9.0-alpha10" :scope "provided"]
