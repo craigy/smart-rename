@@ -11,3 +11,7 @@
   (is (= #{"1.txt" "2.txt"}
          (set (map #(.getName %) (core/ls (.getPath (io/resource "test"))))))))
 
+(deftest num-parts
+  (is (= ["a" "01" "b" "03" "csv"]
+         (map first (core/num-parts "a 01 b 03.csv")))))
+
