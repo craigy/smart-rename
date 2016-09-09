@@ -17,5 +17,11 @@
 
 (deftest test-rename
   (is (= ["a 2" "b 3" "c 4"]
-         (core/rename ["a 1" "b 2" "c 3"] #(inc (bigint %)) 2))))
+         (core/rename ["a 1" "b 2" "c 3"] #(inc (bigint %)) 2)))
+  (is (= ["a 2" "b b" "c 4"]
+         (core/rename ["a 1" "b b" "c 3"] #(inc (bigint %)) 2)))
+  (is (= ["a" "b" "c 2"]
+         (core/rename ["a" "b" "c 1"] #(inc (bigint %)) 2)))
+  (is (= ["a" "b" "c c 3"]
+         (core/rename ["a" "b" "c c 3"] #(inc (bigint %)) 2))))
 

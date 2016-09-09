@@ -21,7 +21,10 @@
        (map-indexed
          (fn [j n]
            (if (= j i)
-             (f n)
+             (try
+               (f n)
+               (catch Exception e
+                 n))
              n))
          (parts %)))
     names))
