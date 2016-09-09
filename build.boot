@@ -3,11 +3,11 @@
  :resource-paths #{"resources"}
 
  :dependencies
- '[[org.clojure/clojure                 "1.9.0-alpha10" :scope "provided"]
-   [org.clojure/tools.nrepl             "0.2.12"        :scope "test"]
-   [metosin/boot-alt-test               "0.1.2"         :scope "test"]
-   [boot/core                           "2.6.0"]
-   [org.clojure/tools.cli               "0.3.5"]])
+ '[[org.clojure/clojure     "1.9.0-alpha12" :scope "provided"]
+   [org.clojure/tools.nrepl "0.2.12"        :scope "test"]
+   [metosin/boot-alt-test   "0.1.2"         :scope "test"]
+   [boot/core               "2.6.0"]
+   [org.clojure/tools.cli   "0.3.5"]])
 
 (require '[metosin.boot-alt-test :refer [alt-test]])
 

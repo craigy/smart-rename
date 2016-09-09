@@ -9,8 +9,22 @@
 (defn ls [path]
   (seq (.listFiles (File. path))))
 
-(defn num-parts [s]
-  (re-seq #"([a-zA-Z]+|\d+)" s))
+(defn parts [s]
+  (map
+    first
+    (re-seq #"([a-zA-Z]+|\d+|[^a-zA-Z\d]+)" s)))
+
+(defn rename [names f i]
+  (map
+    #(apply
+       str
+       (map-indexed
+         (fn [j n]
+           (if (= j i)
+             (f n)
+             n))
+         (parts %)))
+    names))
 
 (defn -main [& args]
   (let [[opts args banner] (cli args
