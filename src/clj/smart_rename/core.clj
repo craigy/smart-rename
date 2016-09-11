@@ -29,6 +29,12 @@
          (parts %)))
     names))
 
+(defn rename-str [names fstr istr]
+  (rename
+    names
+    (eval (read-string fstr))
+    (read-string istr)))
+
 (defn -main [& args]
   (let [[opts args banner] (cli args
                                 ["-h" "--help" "Print this help"

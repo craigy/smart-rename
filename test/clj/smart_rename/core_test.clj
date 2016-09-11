@@ -25,3 +25,10 @@
   (is (= ["a" "b" "c c 3"]
          (core/rename ["a" "b" "c c 3"] #(inc (bigint %)) 2))))
 
+(deftest test-rename-str
+  (is (= ["a 2" "b 3" "c 4"]
+         (core/rename-str
+           ["a 1" "b 2" "c 3"]
+           "#(inc (bigint %))"
+           "2"))))
+
