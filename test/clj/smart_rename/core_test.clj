@@ -16,6 +16,10 @@
          (core/parts "a 01 b 03.csv"))))
 
 (deftest test-rename
+  (is (= []
+         (core/rename [] #(inc (bigint %)) 1)))
+  (is (= ["a2" "b3" "c4" "d5"]
+         (core/rename ["a1" "b2" "c3" "d4"] #(inc (bigint %)) 1)))
   (is (= ["a 2" "b 3" "c 4"]
          (core/rename ["a 1" "b 2" "c 3"] #(inc (bigint %)) 2)))
   (is (= ["a 2" "b b" "c 4"]
@@ -31,4 +35,20 @@
            ["a 1" "b 2" "c 3"]
            "#(inc (bigint %))"
            "2"))))
+
+(deftest test-rename-actions
+  (is (= {"a 1" "a 2"
+          "b 2" "b 3"}
+         (core/rename-actions
+           ["a 1" "b 2"]
+           #(inc (bigint %))
+           2))))
+
+(deftest test-actions->str
+  (is (= (str
+           "Actions performed:\n"
+           "a1.txt -> a2.txt")
+         (core/actions->str
+           {"a1.txt" "a2.txt"}
+           false))))
 

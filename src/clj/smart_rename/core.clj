@@ -1,5 +1,6 @@
 (ns smart-rename.core
   (:require
+    [clojure.string :as string]
     [clojure.tools.cli :refer [cli]])
   (:import
     [java.io File])
@@ -32,8 +33,22 @@
 (defn rename-str [names fstr istr]
   (rename
     names
-    (eval (read-string fstr))
+    (load-string fstr)
     (read-string istr)))
+
+(defn rename-actions [names f i]
+  (let [to (rename names f i)]
+    (zipmap names to)))
+
+(defn actions->str [actions noop?]
+  (str
+    "Actions " (when noop? "to be ") "performed:\n"
+    (string/join
+      "\n"
+      (map
+        (fn [[from to]]
+          (str from " -> " to (when (= from to) " (unchanged)")))
+        actions))))
 
 (defn -main [& args]
   (let [[opts args banner] (cli args
