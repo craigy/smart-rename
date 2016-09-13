@@ -2,7 +2,9 @@
   (:require
     [smart-rename.core :as core]
     [clojure.java.io :as io]
-    [clojure.test :refer [deftest is]]))
+    [clojure.test :refer [deftest is]])
+  (:import
+    [java.io File]))
 
 
 (deftest test-ls
