@@ -3,7 +3,8 @@
     [clojure.string :as string]
     [clojure.tools.cli :refer [parse-opts]])
   (:import
-    [java.io File])
+    [java.io File]
+    [java.nio.file Files Path Paths CopyOption])
   (:gen-class))
 
 
@@ -40,15 +41,20 @@
   (let [to (rename names f i)]
     (zipmap names to)))
 
-(defn actions->str [actions noop?]
+(defn actions->str [actions dir noop?]
   (str
     "Actions " (when noop? "to be ") "performed:\n"
     (string/join
       "\n"
       (map
         (fn [[from to]]
-          (str from " -> " to (when (= from to) " (unchanged)")))
+          (str (str dir "/" from) " -> " (str dir "/" to)
+               (when (= from to) " (unchanged)")))
         actions))))
+
+(defn rename-file [dir source target]
+  (let [path (Paths/get (str dir "/" source) (into-array String []))]
+    (Files/move path (.resolveSibling path target) (into-array CopyOption []))))
 
 
 (def cli-options
@@ -93,8 +99,12 @@
           filenames (map #(.getName %) (ls directory))
           names (filter #(re-find pattern %) filenames)
           actions (rename-actions names function index)]
-      ;(println "Success with " options arguments)
-      ;(println names)
-      (println (actions->str actions noop)))))
-
+      (println (actions->str actions directory true))
+      (when (not noop)
+        (dorun
+          (map
+            (fn [[source target]]
+              (rename-file directory source target))
+            actions)))
+      (println (actions->str actions directory noop)))))
 

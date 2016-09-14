@@ -49,8 +49,9 @@
 (deftest test-actions->str
   (is (= (str
            "Actions performed:\n"
-           "a1.txt -> a2.txt")
+           "./a1.txt -> ./a2.txt")
          (core/actions->str
            {"a1.txt" "a2.txt"}
+           "."
            false))))
 
